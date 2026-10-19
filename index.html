@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>這真的只是樂團番嗎？ MyGO!!!!! × Ave Mujica 名場面對決</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap" rel="stylesheet">
+        
+        
+    <style>
+        /* ============================
+           1. Reset & 基本設定
+           ============================ */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans TC', 'Microsoft JhengHei', sans-serif;
+            background: #0a0a0f;
+            color: #ffffff;
+            overflow-x: hidden;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        /* ============================
+           2. CSS 變數
+           ============================ */
+        :root {
+            /* ==== MyGO (right side) palette ==== */
+            --mygo-primary: #0a1628;            /* deep ocean blue */
+            --mygo-secondary: #2563eb;          /* mist blue */
+            --mygo-accent: #06b6d4;            /* cool teal */
+            --mygo-soft-cyan: #a0e7e5;         /* soft cyan */
+            --mygo-washed-white: #f1f7f9;      /* washed white */
+            --mygo-glow: rgba(38, 163, 224, 0.6);
+            --mygo-bg: linear-gradient(135deg, var(--mygo-primary) 0%, var(--mygo-secondary) 45%, var(--mygo-soft-cyan) 85%, var(--mygo-washed-white) 100%);
+
+            /* ==== Ave Mujica (left side) palette ==== */
+            --ave-primary: #1a0a2e;            /* midnight purple */
+            --ave-secondary: #7b2d8e;          /* dark wine red */
+            --ave-accent: #d4af37;             /* antique gold */
+            --ave-deep-black: #0a0a0f;         /* deep black */
+            --ave-ivory: #f5f5f0;              /* ivory white */
+            --ave-glow: rgba(123, 45, 142, 0.6);
+            --ave-bg: linear-gradient(135deg, var(--ave-deep-black) 0%, var(--ave-primary) 45%, var(--ave-secondary) 85%, var(--ave-ivory) 100%);
+
+            /* ==== Shared ==== */
+            --bg-dark: var(--ave-deep-black);
+            --bg-card: rgba(255, 255, 255, 0.05);
+            --text-dim: #94a3b8;
+        }
+
+        /* -------- Decorative background layers -------- */
+        .split-left {
+            position: relative;
+            overflow: hidden;
+        }
+        .split-left::before {
+            content: '';
+            position: absolute;
+            inset: 20% auto auto 20%;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle at center, var(--ave-accent) 0%, transparent 70%);
+            border-radius: 50%;
+            box-shadow: 0 0 80px var(--ave-accent), 0 0 120px var(--ave-accent);
+            opacity: 0.2;
+            mix-blend-mode: screen;
+        }
+        .split-left::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, transparent 60%, rgba(0,0,0,0.7));
+        }
+        .split-right {
+            position: relative;
+            overflow: hidden;
+        }
+        .split-right::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                repeating-radial-gradient(circle at 50% 50%, var(--mygo-soft-cyan) 0%, var(--mygo-soft-cyan) 2px, transparent 2px, transparent 4px) ;
+            opacity: 0.15;
+            animation: ripple 8s linear infinite;
+            mix-blend-mode: screen;
+        }
+        .split-right::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to left, transparent 60%, rgba(0,0,0,0.7));
+        }
+        @keyframes ripple {
+            0% { transform: translate(0,0) scale(1); }
+            50% { transform: translate(-2%, -2%) scale(1.05); }
+            100% { transform: translate(0,0) scale(1); }
+        }
+
+        /* ============================
+           3. 畫面管理
+           ============================ */
+        .screen {
+            display: none;
+            min-height: 100vh;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .screen.active {
+            display: flex;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        /* ============================
+           4. 開始畫面
+           ============================ */
+        #start-screen {
+            overflow: hidden;
+        }
+
+        .split-bg {
+            position: absolute;
+            inset: 0;
+            display: flex;
+        }
+
+        .split-left {
+            flex: 1;
+            /* Gothic opera house gradient */
+            background: linear-gradient(135deg, #120318, #2b0b3a, #4a0e2e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .split-left::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to right, transparent 60%, rgba(0,0,0,0.7));
+        }
+
+        .split-right {
+            flex: 1;
+            background: var(--mygo-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .split-right::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to left, transparent 60%, rgba(0,0,0,0.7));
+        }
+
+        .split-label {
+            font-size: clamp(1.5rem, 4vw, 3rem);
+            font-weight: 900;
+            letter-spacing: 0.15em;
+            z-index: 1;
+            text-shadow: 0 0 30px currentColor;
+        }
+
+        .split-left .split-label {
+            color: var(--ave-accent);
+            animation: breathe 3s ease-in-out infinite;
+        }
+
+        .split-right .split-label {
+            color: var(--mygo-accent);
+            animation: breathe 3s ease-in-out infinite 1.5s;
+        }
+
+        .start-overlay {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: clamp(2rem, 5vw, 4rem);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            max-width: 520px;
+            width: 90%;
+        }
+
+        .start-overlay h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 900;
+            margin-bottom: 0.3em;
+            background: linear-gradient(135deg, var(--ave-accent), #ffffff, var(--mygo-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .start-overlay .subtitle {
+            font-size: clamp(0.9rem, 2.5vw, 1.15rem);
+            color: var(--text-dim);
+            margin-bottom: 2.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .mode-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 0.9rem 2.2rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: inherit;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 160px;
+        }
+
+        .mode-btn:hover {
+            transform: translateY(-3px);
+            border-color: var(--ave-accent);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.25);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .mode-btn:active {
+            transform: translateY(0);
+        }
+
+        /* ============================
+           5. 對決畫面
+           ============================ */
+        #battle-screen {
+            padding: 1rem;
+            gap: 0.8rem;
+            position: relative;
+            overflow: hidden;
+            /* 雙色漸層底色：左紫右藍 */
+            background:
+                linear-gradient(to right,
+                    #120318 0%, #2b0b3a 25%,
+                    #1a0a2e 40%,
+                    #0a1628 60%,
+                    #0a2540 75%, #0e4b68 100%);
+        }
+
+        /* Ave Mujica 側 — 哥德柱狀光影 */
+        #battle-screen::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                /* 金色環形光暈（左側） */
+                radial-gradient(ellipse 40% 60% at 15% 50%,
+                    rgba(212,175,55,0.12) 0%, transparent 70%),
+                /* 紫色聚光燈 */
+                radial-gradient(ellipse 50% 80% at 20% 30%,
+                    rgba(123,45,142,0.15) 0%, transparent 60%),
+                /* 右側青色水面反射 */
+                radial-gradient(ellipse 40% 70% at 85% 60%,
+                    rgba(100,181,246,0.10) 0%, transparent 60%),
+                /* 右側 teal 光暈 */
+                radial-gradient(ellipse 50% 50% at 80% 40%,
+                    rgba(6,182,212,0.08) 0%, transparent 70%),
+                /* 中央碰撞能量線 */
+                radial-gradient(ellipse 8% 120% at 50% 50%,
+                    rgba(212,175,55,0.08) 0%,
+                    rgba(100,181,246,0.06) 40%,
+                    transparent 80%);
+            pointer-events: none;
+            z-index: 0;
+            animation: battleBgBreathe 8s ease-in-out infinite;
+        }
+
+        /* 斜向雨絲紋理（右半側） */
+        #battle-screen::after {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 55%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                -65deg,
+                rgba(100,181,246,0.04) 0px,
+                rgba(100,181,246,0.04) 1px,
+                transparent 1px,
+                transparent 6px
+            );
+            pointer-events: none;
+            z-index: 0;
+            animation: rainDrift 12s linear infinite;
+        }
+
+        @keyframes battleBgBreathe {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes rainDrift {
+            0% { transform: translateY(-5%) translateX(0); }
+            100% { transform: translateY(5%) translateX(-2%); }
+        }
+
+        /* 對決畫面的中央碰撞光柱 */
+        .battle-collision {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 100%;
+            background:
+                linear-gradient(180deg,
+                    transparent 0%,
+                    rgba(212,175,55,0.06) 20%,
+                    rgba(160,100,220,0.10) 40%,
+                    rgba(100,181,246,0.10) 60%,
+                    rgba(6,182,212,0.06) 80%,
+                    transparent 100%);
+            filter: blur(30px);
+            mix-blend-mode: screen;
+            pointer-events: none;
+            z-index: 0;
+            animation: collisionPulse 5s ease-in-out infinite;
+        }
+
+        @keyframes collisionPulse {
+            0%, 100% { opacity: 0.5; width: 120px; }
+            50% { opacity: 0.85; width: 180px; }
+        }
+
+        /* 左側暗角（歌劇院幕簾感） */
+        .battle-vignette-left {
+            position: absolute;
+            top: 0; left: 0;
+            width: 50%;
+            height: 100%;
+            background:
+                linear-gradient(to right, rgba(18,3,24,0.4) 0%, transparent 100%),
+                linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.3) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 右側暗角（雨後校園感） */
+        .battle-vignette-right {
+            position: absolute;
+            top: 0; right: 0;
+            width: 50%;
+            height: 100%;
+            background:
+                linear-gradient(to left, rgba(5,19,30,0.4) 0%, transparent 100%),
+                linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, transparent 30%, transparent 70%, rgba(0,0,0,0.3) 100%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* 進度條 */
+        .progress-container {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .progress-bar-wrap {
+            flex: 1;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            background: linear-gradient(90deg, var(--ave-secondary), var(--mygo-secondary));
+            transition: width 0.4s ease;
+            width: 0%;
+        }
+
+        .progress-text {
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            white-space: nowrap;
+            min-width: 100px;
+            text-align: right;
+        }
+
+        /* 對戰區域 */
+        .battle-arena {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: clamp(0.5rem, 2vw, 2rem);
+            flex: 1;
+            width: 100%;
+            max-width: 1100px;
+            padding: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 卡牌 */
+        .battle-card {
+            flex: 1;
+            max-width: 480px;
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            border: 3px solid transparent;
+            transition: all 0.35s ease;
+            background: rgba(10, 10, 20, 0.55);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+            z-index: 2;
+        }
+
+        .battle-card .card-image-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #111;
+        }
+
+        .battle-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.35s ease;
+        }
+
+        .battle-card .card-label {
+            text-align: center;
+            padding: 0.7rem 1rem;
+            font-weight: 700;
+            font-size: clamp(0.85rem, 2vw, 1.05rem);
+            letter-spacing: 0.08em;
+        }
+
+        /* Ave Mujica 卡牌 */
+        .battle-card.ave {
+            border-color: rgba(123, 45, 142, 0.4);
+        }
+
+        .battle-card.ave .card-label {
+            background: linear-gradient(135deg, var(--ave-primary), #2d1b4e);
+            color: var(--ave-accent);
+        }
+
+        .battle-card.ave:hover {
+            border-color: var(--ave-secondary);
+            box-shadow: 0 0 30px var(--ave-glow), 0 8px 32px rgba(0,0,0,0.5);
+            transform: translateY(-6px);
+        }
+
+        .battle-card.ave:hover img {
+            transform: scale(1.05);
+        }
+
+        /* MyGO 卡牌 */
+        .battle-card.mygo {
+            border-color: rgba(37, 99, 235, 0.4);
+        }
+
+        .battle-card.ave .card-label {
+            background: linear-gradient(135deg, var(--ave-primary), #2d1b4e);
+            color: var(--ave-accent);
+            font-family: 'Cinzel', serif;
+        }
+
+        .battle-card.mygo .card-label {
+            background: linear-gradient(135deg, var(--mygo-primary), #1e3a5f);
+            color: var(--mygo-accent);
+            font-family: 'Great Vibes', cursive;
+        }
+
+        /* Grain overlay — 35mm 膠捲噪點 */
+        .grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.04;
+            mix-blend-mode: overlay;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+            background-size: 180px 180px;
+        }
+
+        /* 首頁中心碰撞層 */
+        .center-collision {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 5;
+            background:
+                radial-gradient(ellipse 10% 100% at 50% 50%,
+                    rgba(212,175,55,0.15) 0%,
+                    rgba(160,100,220,0.08) 40%,
+                    transparent 70%);
+            mix-blend-mode: screen;
+            animation: centerCollisionPulse 6s ease-in-out infinite;
+        }
+
+        @keyframes centerCollisionPulse {
+            0%, 100% { opacity: 0.4; filter: blur(30px); }
+            50% { opacity: 0.7; filter: blur(50px); }
+        }
+
+
+        .battle-card.mygo:hover {
+            border-color: var(--mygo-secondary);
+            box-shadow: 0 0 30px var(--mygo-glow), 0 8px 32px rgba(0,0,0,0.5);
+            transform: translateY(-6px);
+        }
+
+        .battle-card.mygo:hover img {
+            transform: scale(1.05);
+        }
+
+        /* 選中 / 落選動畫 */
+        .battle-card.selected {
+            transform: scale(1.04) !important;
+            z-index: 2;
+        }
+
+        .battle-card.selected.ave {
+            border-color: var(--ave-accent) !important;
+            box-shadow: 0 0 50px var(--ave-glow), 0 0 80px rgba(212, 175, 55, 0.3) !important;
+        }
+
+        .battle-card.selected.mygo {
+            border-color: var(--mygo-accent) !important;
+            box-shadow: 0 0 50px var(--mygo-glow), 0 0 80px rgba(6, 182, 212, 0.3) !important;
+        }
+
+        .battle-card.rejected {
+            opacity: 0.3;
+            transform: scale(0.95) !important;
+            filter: grayscale(0.8);
+        }
+
+        /* VS 徽章 */
+        .vs-badge {
+            width: clamp(45px, 7vw, 70px);
+            height: clamp(45px, 7vw, 70px);
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--ave-secondary), var(--mygo-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(0.9rem, 2.5vw, 1.4rem);
+            font-weight: 900;
+            letter-spacing: 0.05em;
+            flex-shrink: 0;
+            box-shadow: 0 0 25px rgba(123, 45, 142, 0.4), 0 0 25px rgba(37, 99, 235, 0.4);
+            animation: vsPulse 2s ease-in-out infinite;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            z-index: 3;
+        }
+
+        /* 即時比分 */
+        .live-score {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            font-size: clamp(0.85rem, 2vw, 1rem);
+            color: var(--text-dim);
+            padding: 0.5rem 0;
+            position: relative;
+            z-index: 2;
+        }
+
+        .live-score .score-side {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .live-score .score-side.ave .score-name { color: var(--ave-accent); }
+        .live-score .score-side.mygo .score-name { color: var(--mygo-accent); }
+        .live-score .score-num {
+            font-weight: 900;
+            font-size: 1.3em;
+            color: #fff;
+        }
+
+        .live-score .score-divider {
+            font-size: 1.2em;
+            color: rgba(255,255,255,0.2);
+        }
+
+        /* ============================
+           6. 結果畫面
+           ============================ */
+        #result-screen {
+            padding: 2rem;
+            gap: 1.5rem;
+            text-align: center;
+            transition: background 0.5s ease;
+        }
+
+        #result-screen.ave-wins {
+            background: linear-gradient(180deg, #1a0a2e 0%, #0a0a0f 100%);
+        }
+
+        #result-screen.mygo-wins {
+            background: linear-gradient(180deg, #0a1628 0%, #0a0a0f 100%);
+        }
+
+        #result-screen.tie {
+            background: linear-gradient(180deg, #1a0a2e 0%, #0a1628 50%, #0a0a0f 100%);
+        }
+
+        .result-title {
+            font-size: clamp(1rem, 3vw, 1.4rem);
+            font-weight: 500;
+            margin-bottom: 0.2rem;
+            color: var(--text-dim);
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+        }
+
+        .diagnosis-title {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-weight: 900;
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, var(--ave-accent), #ffffff, var(--mygo-accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+            text-shadow: none;
+        }
+
+        .result-scores {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .result-score-card {
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 1.5rem 2.5rem;
+            min-width: 180px;
+            transition: all 0.3s ease;
+        }
+
+        .result-score-card.ave {
+            border-color: rgba(123, 45, 142, 0.5);
+        }
+
+        .result-score-card.mygo {
+            border-color: rgba(37, 99, 235, 0.5);
+        }
+
+        .result-score-card.winner {
+            transform: scale(1.08);
+        }
+
+        .result-score-card.winner.ave {
+            border-color: var(--ave-accent);
+            box-shadow: 0 0 40px var(--ave-glow);
+        }
+
+        .result-score-card.winner.mygo {
+            border-color: var(--mygo-accent);
+            box-shadow: 0 0 40px var(--mygo-glow);
+        }
+
+        .result-score-label {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.08em;
+        }
+
+        .result-score-card.ave .result-score-label { color: var(--ave-accent); }
+        .result-score-card.mygo .result-score-label { color: var(--mygo-accent); }
+
+        .result-score-number {
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 900;
+        }
+
+        /* 分數對比條 */
+        .score-bars {
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            height: 16px;
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(255,255,255,0.1);
+        }
+
+        .score-bar-fill {
+            height: 100%;
+            transition: width 1s ease-out;
+        }
+
+        .score-bar-fill.ave {
+            background: linear-gradient(90deg, var(--ave-secondary), var(--ave-accent));
+        }
+
+        .score-bar-fill.mygo {
+            background: linear-gradient(90deg, var(--mygo-secondary), var(--mygo-accent));
+        }
+
+        /* 判定文字 */
+        .verdict {
+            font-size: clamp(1.05rem, 2.8vw, 1.35rem);
+            line-height: 2.2;
+            max-width: 520px;
+            padding: 2rem 2.5rem;
+            border-radius: 20px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            animation: fadeInUp 0.8s ease-out 0.5s both;
+            text-align: center;
+            color: rgba(255,255,255,0.85);
+            letter-spacing: 0.03em;
+        }
+
+        /* 再來一次按鈕 */
+        .restart-btn {
+            padding: 1rem 2.5rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: inherit;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out 0.8s both;
+        }
+
+        .restart-btn:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255,255,255,0.5);
+            box-shadow: 0 8px 30px rgba(255,255,255,0.1);
+        }
+
+        /* ============================
+           7. 動畫
+           ============================ */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 0.7; text-shadow: 0 0 20px currentColor; }
+            50% { opacity: 1; text-shadow: 0 0 40px currentColor, 0 0 60px currentColor; }
+        }
+
+        @keyframes vsPulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(123,45,142,0.3), 0 0 20px rgba(37,99,235,0.3); }
+            50% { transform: scale(1.1); box-shadow: 0 0 35px rgba(123,45,142,0.5), 0 0 35px rgba(37,99,235,0.5); }
+        }
+
+        @keyframes cardEnterLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes cardEnterRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .card-enter-left {
+            animation: cardEnterLeft 0.4s ease-out;
+        }
+
+        .card-enter-right {
+            animation: cardEnterRight 0.4s ease-out;
+        }
+
+        /* ============================
+           8. 響應式設計
+           ============================ */
+        @media (max-width: 768px) {
+            .battle-arena {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .battle-card {
+                max-width: 95%;
+                width: 100%;
+            }
+
+            .battle-card .card-image-wrap {
+                aspect-ratio: 16 / 9;
+            }
+
+            .vs-badge {
+                width: 40px;
+                height: 40px;
+                font-size: 0.85rem;
+            }
+
+            .split-label {
+                font-size: 1.3rem;
+            }
+
+            .result-scores {
+                gap: 1rem;
+            }
+
+            .result-score-card {
+                padding: 1rem 1.8rem;
+                min-width: 140px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .start-overlay {
+                padding: 1.5rem;
+                border-radius: 16px;
+            }
+
+            .mode-btn {
+                min-width: 130px;
+                padding: 0.75rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* 圖片載入失敗的佔位 */
+        .img-error {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.03);
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+
+        <!-- ========== 開始畫面 ========== -->
+        <div id="start-screen" class="screen active">
+            <div class="split-bg">
+                <div class="split-left">
+                    <span class="split-label">Ave Mujica</span>
+                </div>
+                <div class="split-right">
+                    <span class="split-label">MyGO!!!!!</span>
+                </div>
+            </div>
+            <div class="center-collision"></div>
+    <div class="grain"></div>
+            <div class="start-overlay">
+                <h1>這真的只是樂團番嗎？ MyGO!!!!! × Ave Mujica 名場面對決</h1>
+                <p class="subtitle">Ave Mujica vs MyGO!!!!!</p>
+                <div class="mode-buttons">
+                    <button class="mode-btn" onclick="startGame(16)">16 強</button>
+                    <button class="mode-btn" onclick="startGame(32)">32 強</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 對決畫面 ========== -->
+        <div id="battle-screen" class="screen">
+            <!-- 背景裝飾層 -->
+            <div class="battle-vignette-left"></div>
+            <div class="battle-vignette-right"></div>
+            <div class="battle-collision"></div>
+            <!-- 進度條 -->
+            <div class="progress-container">
+                <div class="progress-bar-wrap">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+                <span class="progress-text" id="progress-text">第 1 / 16 場</span>
+            </div>
+
+            <!-- 對戰區域 -->
+            <div class="battle-arena">
+                <!-- Ave Mujica 卡牌 -->
+                <div class="battle-card ave" id="card-ave" onclick="selectCard('ave')">
+                    <div class="card-image-wrap">
+                        <img id="img-ave" src="" alt="Ave Mujica 名場面">
+                    </div>
+                    <div class="card-label">Ave Mujica</div>
+                </div>
+
+                <!-- VS -->
+                <div class="vs-badge">VS</div>
+
+                <!-- MyGO 卡牌 -->
+                <div class="battle-card mygo" id="card-mygo" onclick="selectCard('mygo')">
+                    <div class="card-image-wrap">
+                        <img id="img-mygo" src="" alt="MyGO 名場面">
+                    </div>
+                    <div class="card-label">MyGO!!!!!</div>
+                </div>
+            </div>
+
+            <!-- 即時比分 -->
+            <div class="live-score">
+                <div class="score-side ave">
+                    <span class="score-name">Ave Mujica</span>
+                    <span class="score-num" id="live-ave">0</span>
+                </div>
+                <span class="score-divider">:</span>
+                <div class="score-side mygo">
+                    <span class="score-num" id="live-mygo">0</span>
+                    <span class="score-name">MyGO</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 結果畫面 ========== -->
+        <div id="result-screen" class="screen">
+            <h1 class="result-title">你的陣營傾向</h1>
+            <div class="diagnosis-title" id="diagnosis-title"></div>
+
+            <div class="result-scores">
+                <div class="result-score-card ave" id="result-card-ave">
+                    <div class="result-score-label">Ave Mujica</div>
+                    <div class="result-score-number" id="result-ave">0</div>
+                </div>
+                <div class="result-score-card mygo" id="result-card-mygo">
+                    <div class="result-score-label">MyGO!!!!!</div>
+                    <div class="result-score-number" id="result-mygo">0</div>
+                </div>
+            </div>
+
+            <div class="score-bars">
+                <div class="score-bar-fill ave" id="bar-ave" style="width:50%"></div>
+                <div class="score-bar-fill mygo" id="bar-mygo" style="width:50%"></div>
+            </div>
+
+            <div class="verdict" id="verdict"></div>
+
+            <button class="restart-btn" onclick="restart()">🔄 再來一次</button>
+        </div>
+
+    </div>
+
+    <script>
+        // ============================================================
+        //  📌 圖片清單（自動產生，不需手動修改）
+        // ============================================================
+        const MYGO_IMAGES = [
+            "05933775-0e34-455e-ba4e-7372996a486e.jpg",
+            "067b191e-dedf-4b1c-83b9-8c97d035cb60.jpg",
+            "07bc076d-6bba-46b8-8303-03eb2b16a63a.jpg",
+            "0cd77248-20ab-4131-9cec-c5b7b1c787e6.jpg",
+            "1be34948-f1e4-4aa3-8e84-96c058c09f5e.jpg",
+            "212358c0-95b9-45a4-a4c1-7ff37b817bfe.jpg",
+            "237afd37-1702-472e-b437-e2bbd4ba37f7.jpg",
+            "272b5f38-eac7-4872-aaa3-2c4a3673840a.jpg",
+            "274e9d8d-82fc-4999-b741-fe461d948c74.jpg",
+            "2c4b5bfa-4cc0-40a6-b2f6-e1362bbdf52b.jpg",
+            "2c808193-f597-4a50-9036-a463cdc09b34.jpg",
+            "2dbdbd3b-4591-4155-afe3-a4c952d5252f.jpg",
+            "3ae25b25-0ea3-4a6a-b5fa-e012b5b3b92b.jpg",
+            "3c5fa304-1692-4d36-87f1-225524c01116.jpg",
+            "41f472f1-3162-482a-9928-4ce6f3e7f3f2.jpg",
+            "4c386309-e04f-4ec4-9c1f-d89352d25cf3.jpg",
+            "4e51a097-6111-4d60-98c6-ec18486fddca.jpg",
+            "52b4a9bb-cc6a-427f-a02b-f2631e4e68c3.jpg",
+            "52fd0f94-38bb-4f9a-aced-6b6391d0a808.jpg",
+            "55af4a26-e002-4b54-8b2e-2faaa714cca7.jpg",
+            "565b9c0f-421c-45d2-bc82-03cd6929f743.jpg",
+            "60d09699-634a-48a3-a038-fe93622b19dd.jpg",
+            "6eeb323f-650d-4eb6-899f-f30119f5ca63.jpg",
+            "84514ca0-9d27-4938-b01a-0de807381eff.jpg",
+            "85bce3a1-0279-4d86-8495-244de3fd50b3.jpg",
+            "86a25d37-de54-4664-8e38-e5c0011f633f.jpg",
+            "88f57b23-59a3-478e-9ad4-e72f3da8b5bc.jpg",
+            "8c6b9b76-45b3-4fb6-8e35-aa7864236cc5.jpg",
+            "8fa714b7-dca7-466b-bfe4-f021b7237384.jpg",
+            "8ffeae21-ff74-4ad3-b90a-98a067c636c6.jpg",
+            "a19ee51c-e7eb-4d50-b488-7206e3ed0a1e.jpg",
+            "a6d41204-e5e5-4842-b285-46e576638a2e.jpg",
+            "af65b9c7-db3b-4f29-84c0-ca0b0cca4526.jpg",
+            "b3b51b0f-a655-4ef7-bc55-b041996ca3d7.jpg",
+            "b6d97c15-1da8-4eb8-8b48-c1b35ff243ce.jpg",
+            "b7b6eaad-e20e-44f0-807b-44712fe25b00.jpg",
+            "c1e4d5e8-7924-4f7c-8c1e-f350c9f53fa6.jpg",
+            "c25f2cef-1dba-4883-a441-8f8cfb07e1bf.jpg",
+            "c2bd4866-4cfd-4516-b4bf-7db50d735753.jpg",
+            "c5170a4c-ad99-4266-acb8-68594da83be2.jpg",
+            "c59fcf2c-17b7-492c-90c4-ae99a8f4f710.jpg",
+            "c67e1bea-dee8-43c6-b1ec-b0080b58c0d9.jpg",
+            "ca4b2663-e2de-4b57-8550-d8b6e059ee60.jpg",
+            "d85f40de-afb9-49e4-9a5e-f52346b18beb.jpg",
+            "db707143-29e4-4177-9544-be5fe5fd1306.jpg",
+            "dea6c6bd-1048-4b69-bdee-fe86a0fa0d33.jpg",
+            "dfa7cee2-a412-41b5-806f-b93a03d08197.jpg",
+            "e0f5c669-ff13-416b-af7b-8bc2165e6a38.jpg",
+            "e1b53acf-d904-468a-9d5c-cf5fd41ab330.jpg",
+            "e4c90ee7-8a0a-4921-a220-099401e651b8.jpg",
+            "e7563d1a-3bc5-46f4-bb16-37113ff08e30.jpg",
+            "e928d4bb-daca-4951-9cea-3fcb6373fb27.jpg",
+            "fda2b596-1542-4a95-8b33-6a2f51c790eb.jpg",
+            "fda8a97e-065b-4092-9826-598a62be8931.jpg",
+            "ff9bb065-a821-47ce-b4dd-2c4ab6fbab9b.jpg"
+        ];
+
+        const AVE_MUJICA_IMAGES = [
+            "018b9485-3d5a-4e99-b572-4a4c5d2fa33a.jpg",
+            "027fedbc-8bec-4b0c-a8ce-45f14a33cdfa.jpg",
+            "069eda1a-83ef-43c6-9103-4413ea606923.jpg",
+            "07eb5598-ac54-49a1-bf2a-dd34474d4956.jpg",
+            "084bd9df-1afc-4e14-8b7e-38324eb44168.jpg",
+            "0b2af416-1ba0-43b6-ae35-8d2841fe41a3.jpg",
+            "0b4d101f-0a44-4dea-bc33-564cd33ff486.jpg",
+            "0c182a05-cb94-4d88-81e6-a605d5cec333.jpg",
+            "0c9ed3db-80d3-45b4-b647-d6b5fb1e2706.jpg",
+            "0e44270e-2f67-478a-82fb-accc7115871d.jpg",
+            "12ad5a57-40fc-4ac8-b34f-5830e2912a5b.jpg",
+            "13c82f91-e1ff-49b5-8824-7170aecf389d.jpg",
+            "163406cc-ff6c-4926-b16b-6b7d4dac7a7f.jpg",
+            "1b5c4d5f-aa32-4207-b3db-ef068008d6ee.jpg",
+            "1d930ba7-4348-4ac1-aa5d-875f968bbe7f.jpg",
+            "1f092fd5-5148-4a1b-8b67-fc7142acceef.jpg",
+            "1f8779dd-1e6f-4b69-93c5-dd3ef7a26d13.jpg",
+            "20e1c24b-ba4b-4805-a86d-4a1f4aa74f4d.jpg",
+            "2332256d-140a-463d-851e-7a38ccf3e5b6.jpeg",
+            "2b1bc9e7-e80e-4ef4-b804-33dc92e1a8c8.jpg",
+            "2d858d99-51da-422b-9bf2-6f620462732c.jpg",
+            "30a6773e-b27e-442e-9d53-980225bd15da.jpg",
+            "32362605-9a72-4bd9-b1fd-9d62254ab11b.jpg",
+            "351f8548-9a96-4aa0-af62-3840a54650b4.jpg",
+            "35dd08c3-ea8e-4a6b-97da-fea042450da2.jpg",
+            "37386cc9-4648-4e54-b5c0-f27ae3faf07e.jpg",
+            "3cde49a2-e43e-4a2b-90a1-8516ea77c022.jpg",
+            "4410536a-6b1b-493b-899c-62ba4da7d6c2.jpg",
+            "45e1e464-2056-4d11-b514-5db2d0509f98.jpg",
+            "46a188c3-4377-4877-8c14-87f2bf533737.jpg",
+            "484eebeb-6803-47bf-9b7b-fafd17f76574.jpg",
+            "49834728-b93c-4f86-bfcc-7f723b2f8a20.jpg",
+            "4c5b25c2-9282-48ea-b8b1-6d6b31e60795.jpg",
+            "4e504938-4785-46a6-ab87-aa27453dc2bc.jpg",
+            "5eacfed7-ab14-44eb-98ce-f2b097d998b4.jpg",
+            "5ff7f310-9fd4-458e-a694-28d944bb688a.jpg",
+            "61ee7e05-7cc6-4956-8680-b1b63c0e8307.jpg",
+            "63dcb8ce-6662-40a1-a0d7-2c57e9b51068.jpg",
+            "686818c4-0583-40cd-98bf-7ee3028e5522.jpg",
+            "6a756bf9-8180-45f0-983f-9fc47dbf31e5.jpg",
+            "6f172619-1ac5-40ee-8a04-4b44127abfd7.jpg",
+            "7221844c-93fd-4af8-86c8-866875c3fdae.jpg",
+            "7433c134-ac9d-4882-a4b1-c1094ffbb062.jpg",
+            "7634a654-17df-4100-8a72-e7e28d770217.jpg",
+            "776e98fc-5d10-4017-9eca-1fa012a909f9.jpeg",
+            "77d64d5e-5aeb-4e3e-8d89-c987b4a5fd8a.jpg",
+            "7cc2646c-dd1e-429a-9288-a5cf36b0cb83.jpg",
+            "7ff87654-20d6-4598-838d-08b412897550.jpg",
+            "8227a317-5794-43d6-96dc-9cb303a59574.jpg",
+            "85de233b-2321-4b3d-bc68-9f4a5c31b480.jpg",
+            "87e8248d-b56f-466f-9059-370e57861031.jpg",
+            "88dcfdf8-aede-4559-8cbd-280850d66b8f.jpg",
+            "8d983b9b-e937-4551-bce9-35f157f1c0bf.jpg",
+            "8eb9c170-7636-414d-9afd-403863dd8d05.jpg",
+            "9019bf63-d989-44e5-a697-ab33bd7606cc.jpg",
+            "9106c6e1-88f1-49fe-b15d-a88a0f6db313.jpg",
+            "99121190-e393-4ffb-a830-69958fbb2b99.jpg",
+            "a03c7fa3-04c0-40e5-8d7d-a335f4e841a0.jpg",
+            "a1324f9c-0d81-4782-96eb-fc3a3921704f.jpg",
+            "a6ed3df4-e2de-4817-89da-55a7218b4714.jpg",
+            "a7b145e6-c7da-45bb-87ed-80e35d6ddd9c.jpg",
+            "a97437da-2594-4995-8612-072eb44a00f9.jpg",
+            "ab0e1005-344d-4b36-b2b3-467e9908ff16.jpg",
+            "ad814b74-c3df-46be-9a5d-bb54642321c3.jpg",
+            "b1bb7b4b-6000-43ce-921b-0780327ecb6d.jpg",
+            "b39553bd-77b3-4052-88dc-7274665d45ce.jpg",
+            "b7256bd3-0ddc-4605-a59a-b0016192527a.jpg",
+            "b899bcba-93d8-44dc-a2a2-f40c9aca086d.jpg",
+            "b8c664f3-1768-4a08-bcc3-441251631526.jpg",
+            "bb750cce-076b-4fea-9e58-314a9af40923.jpg",
+            "bbbac93e-0b9f-48e8-a1af-83571c50d2c2.jpg",
+            "bde0a195-6cfc-41c2-9bd0-cc9a13d5409d.jpg",
+            "c3956dd5-1dca-4881-851a-1a52a1f71411.jpg",
+            "c576846f-a32f-4977-8891-e0f8cec6b62d.jpg",
+            "c7cb5208-7aa8-4d7f-acae-5ada75ee84a1.jpg",
+            "c8342bd3-f001-4bd8-95f7-112c8c40388b.jpg",
+            "ca6b3389-ba58-435b-ac3b-94e86e6cb4c0.jpg",
+            "cb160044-86a2-421a-b2a6-47eff5e91267.jpg",
+            "d062733c-f2ee-4310-bf29-800ccbe02b9c.jpg",
+            "d5eba561-ce56-4b15-b351-baa4d91a2557.jpg",
+            "d9de9385-d4f6-4898-a80a-3369ea409d83.jpg",
+            "da9dbf47-e221-49ef-a2ec-562e08e90b19.jpg",
+            "dc26adc9-a134-4e16-88b6-97babfecfd25.jpg",
+            "dc4b47f2-515f-446c-a52c-8ee89f95c90f.jpg",
+            "ddb7da23-5d59-492f-b596-4ada6e2e186f.jpg",
+            "e1a7cd79-a361-4d63-9c1a-626e7d436f09.jpg",
+            "e35a9c5b-2853-4794-809f-dd380abf9631.jpg",
+            "e3c1756a-4da4-4a3d-abd4-81ff9c616eac.jpg",
+            "e3c8a162-da15-4f9f-8ad1-84e4f9f8d3a7.jpg",
+            "e44bcae0-0de7-424f-acb5-df4e98c4da2a.jpg",
+            "e578511c-4904-4078-88d1-d53d26216390.jpg",
+            "e625ca84-bdac-4836-93b2-e0c4dea812bb.jpg",
+            "e638daee-d132-4754-9c14-accb191a3045.jpg",
+            "e88e93de-f417-4b60-96dc-c94b2a5b1217.jpg",
+            "eb035c2b-b87b-4a60-bb0d-cfaaec1eb093.jpg",
+            "ed38cc85-11aa-46f8-aa07-432509d64957.jpg",
+            "ee05dd0d-910c-4dac-bb74-c99f0504438a.jpg",
+            "f0eabc78-efe2-4e65-a181-5370b515f7d0.jpg",
+            "f248b150-d783-4803-a512-a73829e57a4f.jpg",
+            "febe586e-da80-4baf-8344-38f697eda06a.jpg"
+        ];
+
+        const MYGO_PATH = 'assets/mygo/';
+        const AVE_MUJICA_PATH = 'assets/ave-mujica/';
+        // ============================================================
+
+        // ── 遊戲狀態 ──
+        let game = {
+            totalRounds: 0,
+            currentRound: 0,
+            aveScore: 0,
+            mygoScore: 0,
+            pairs: [],
+            isAnimating: false
+        };
+
+        // ── DOM 元素快取 ──
+        const $ = id => document.getElementById(id);
+
+        // ── 工具函式 ──
+        function shuffle(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        // ── 畫面切換 ──
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            $(screenId).classList.add('active');
+        }
+
+        // ── 開始遊戲 ──
+        function startGame(totalScenes) {
+            const perSide = totalScenes / 2;  // 每邊各抽幾張
+
+            // 從圖片池中隨機抽取
+            const aveSelected = shuffle(AVE_MUJICA_IMAGES).slice(0, perSide).map(f => AVE_MUJICA_PATH + f);
+            const mygoSelected = shuffle(MYGO_IMAGES).slice(0, perSide).map(f => MYGO_PATH + f);
+
+            // 初始化遊戲狀態
+            game.totalRounds = perSide;
+            game.currentRound = 0;
+            game.aveScore = 0;
+            game.mygoScore = 0;
+            game.isAnimating = false;
+            game.pairs = aveSelected.map((ave, i) => ({ ave, mygo: mygoSelected[i] }));
+
+            // 更新 UI
+            $('live-ave').textContent = '0';
+            $('live-mygo').textContent = '0';
+
+            showScreen('battle-screen');
+            showBattle();
+        }
+
+        // ── 顯示當前對決 ──
+        function showBattle() {
+            const pair = game.pairs[game.currentRound];
+            const cardAve = $('card-ave');
+            const cardMygo = $('card-mygo');
+            const imgAve = $('img-ave');
+            const imgMygo = $('img-mygo');
+
+            // 清除上一輪的狀態
+            cardAve.classList.remove('selected', 'rejected');
+            cardMygo.classList.remove('selected', 'rejected');
+
+            // 載入圖片
+            imgAve.src = pair.ave;
+            imgMygo.src = pair.mygo;
+
+            // 圖片載入失敗處理
+            imgAve.onerror = function () {
+                this.style.display = 'none';
+                const wrap = this.parentElement;
+                if (!wrap.querySelector('.img-error')) {
+                    const div = document.createElement('div');
+                    div.className = 'img-error';
+                    div.textContent = '圖片載入失敗';
+                    wrap.appendChild(div);
+                }
+            };
+            imgAve.onload = function () {
+                this.style.display = 'block';
+                const err = this.parentElement.querySelector('.img-error');
+                if (err) err.remove();
+            };
+            imgMygo.onerror = function () {
+                this.style.display = 'none';
+                const wrap = this.parentElement;
+                if (!wrap.querySelector('.img-error')) {
+                    const div = document.createElement('div');
+                    div.className = 'img-error';
+                    div.textContent = '圖片載入失敗';
+                    wrap.appendChild(div);
+                }
+            };
+            imgMygo.onload = function () {
+                this.style.display = 'block';
+                const err = this.parentElement.querySelector('.img-error');
+                if (err) err.remove();
+            };
+
+            // 進場動畫
+            cardAve.classList.add('card-enter-left');
+            cardMygo.classList.add('card-enter-right');
+            setTimeout(() => {
+                cardAve.classList.remove('card-enter-left');
+                cardMygo.classList.remove('card-enter-right');
+            }, 400);
+
+            // 更新進度
+            const progress = ((game.currentRound) / game.totalRounds) * 100;
+            $('progress-fill').style.width = progress + '%';
+            $('progress-text').textContent = `第 ${game.currentRound + 1} / ${game.totalRounds} 場`;
+
+            // 預載下一組圖片
+            if (game.currentRound + 1 < game.totalRounds) {
+                const next = game.pairs[game.currentRound + 1];
+                new Image().src = next.ave;
+                new Image().src = next.mygo;
+            }
+
+            game.isAnimating = false;
+        }
+
+        // ── 選擇卡牌 ──
+        function selectCard(side) {
+            if (game.isAnimating) return;
+            game.isAnimating = true;
+
+            const cardAve = $('card-ave');
+            const cardMygo = $('card-mygo');
+
+            // 更新分數
+            if (side === 'ave') {
+                game.aveScore++;
+                cardAve.classList.add('selected');
+                cardMygo.classList.add('rejected');
+            } else {
+                game.mygoScore++;
+                cardMygo.classList.add('selected');
+                cardAve.classList.add('rejected');
+            }
+
+            // 更新即時比分
+            $('live-ave').textContent = game.aveScore;
+            $('live-mygo').textContent = game.mygoScore;
+
+            game.currentRound++;
+
+            // 延遲後進入下一場或結果
+            setTimeout(() => {
+                if (game.currentRound >= game.totalRounds) {
+                    showResults();
+                } else {
+                    showBattle();
+                }
+            }, 650);
+        }
+
+        // ── 顯示結果 ──
+        function showResults() {
+            const resultScreen = $('result-screen');
+
+            // 設定背景主題
+            resultScreen.classList.remove('ave-wins', 'mygo-wins', 'tie');
+            if (game.aveScore > game.mygoScore) {
+                resultScreen.classList.add('ave-wins');
+            } else if (game.mygoScore > game.aveScore) {
+                resultScreen.classList.add('mygo-wins');
+            } else {
+                resultScreen.classList.add('tie');
+            }
+
+            showScreen('result-screen');
+
+            // 動畫計數
+            animateCount('result-ave', game.aveScore);
+            animateCount('result-mygo', game.mygoScore);
+
+            // 勝者卡牌高亮
+            const cardAve = $('result-card-ave');
+            const cardMygo = $('result-card-mygo');
+            cardAve.classList.remove('winner');
+            cardMygo.classList.remove('winner');
+
+            if (game.aveScore > game.mygoScore) {
+                cardAve.classList.add('winner');
+            } else if (game.mygoScore > game.aveScore) {
+                cardMygo.classList.add('winner');
+            } else {
+                cardAve.classList.add('winner');
+                cardMygo.classList.add('winner');
+            }
+
+            // 分數對比條
+            const total = game.aveScore + game.mygoScore;
+            const avePct = total > 0 ? (game.aveScore / total * 100) : 50;
+            const mygoPct = total > 0 ? (game.mygoScore / total * 100) : 50;
+
+            setTimeout(() => {
+                $('bar-ave').style.width = avePct + '%';
+                $('bar-mygo').style.width = mygoPct + '%';
+            }, 200);
+
+            // 判定文字（梗圖人格診斷）
+            const verdict = getVerdict();
+            $('diagnosis-title').innerHTML = verdict.title;
+            $('verdict').innerHTML = verdict.desc;
+
+            // 進度條拉滿
+            $('progress-fill').style.width = '100%';
+        }
+
+        // ── 計數動畫 ──
+        function animateCount(elementId, target) {
+            const el = $(elementId);
+            let current = 0;
+            const step = Math.max(1, Math.floor(target / 20));
+            const interval = setInterval(() => {
+                current += step;
+                if (current >= target) {
+                    current = target;
+                    clearInterval(interval);
+                }
+                el.textContent = current;
+            }, 50);
+        }
+
+        // ── 判定訊息（梗圖人格診斷） ──
+        function getVerdict() {
+            const total = game.totalRounds;
+            const aveScore = game.aveScore;
+            const mygoScore = game.mygoScore;
+            const winRatio = Math.max(aveScore, mygoScore) / total;
+
+            // 隨機從陣列中挑一個
+            function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+            // === 平手 ===
+            if (aveScore === mygoScore) {
+                return pick([
+                    {
+                        title: '🎪 雙棲樂子人',
+                        desc: '你不是 MyGO 派。<br>也不是 Ave Mujica 派。<br><br>你只是喜歡看大家發病。'
+                    },
+                    {
+                        title: '🍿 純種觀眾',
+                        desc: '當角色開始吵架：<br><br>別人很緊張。<br>你很興奮。'
+                    }
+                ]);
+            }
+
+            const winner = aveScore > mygoScore ? 'ave' : 'mygo';
+
+            // === Ave Mujica 壓倒性 (≥90%) ===
+            if (winner === 'ave' && winRatio >= 0.9) {
+                return pick([
+                    {
+                        title: '🌙 重力失控',
+                        desc: '已經不是重女了。<br><br>是黑洞。'
+                    },
+                    {
+                        title: '🌙 宿命論支持者',
+                        desc: '正常人看到誤會會想解開。<br><br>你看到誤會會想：<br>「再增加一點會不會更精彩？」'
+                    }
+                ]);
+            }
+
+            // === Ave Mujica 優勢 (≥60%) ===
+            if (winner === 'ave') {
+                return pick([
+                    {
+                        title: '💜 輕度重力患者',
+                        desc: '看來比起坐下來好好溝通，<br>你更喜歡先把事情搞複雜。<br><br>等到所有人都受傷之後，<br>再用一首歌解決。'
+                    },
+                    {
+                        title: '💜 劇情發酵派',
+                        desc: '你的選擇證明了一件事：<br><br>能一句話說清楚的事情，<br>你比較喜歡繞十二集再講。'
+                    }
+                ]);
+            }
+
+            // === MyGO 壓倒性 (≥90%) ===
+            if (winner === 'mygo' && winRatio >= 0.9) {
+                return pick([
+                    {
+                        title: '☀️ 羈絆信仰者',
+                        desc: '所有人都在發病。<br><br>而你還相信友情。'
+                    }
+                ]);
+            }
+
+            // === MyGO 優勢 (≥60%) ===
+            return pick([
+                {
+                    title: '💙 青春補完計畫',
+                    desc: '你似乎相信<br>只要大家哭得夠久，<br><br>樂團最後都能成立。'
+                },
+                {
+                    title: '💙 希望派代表',
+                    desc: '別人看的是樂團動畫。<br><br>你看的其實是大型心理諮商現場。'
+                }
+            ]);
+        }
+
+        // ── 重新開始 ──
+        function restart() {
+            // 重置分數條
+            $('bar-ave').style.width = '50%';
+            $('bar-mygo').style.width = '50%';
+            $('progress-fill').style.width = '0%';
+
+            showScreen('start-screen');
+        }
+    </script>
+</body>
+</html>
